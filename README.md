@@ -14,7 +14,8 @@ Using the `rvest` package in R, these records were scraped from the site
 and compiled into the data-set available here with the code below.
 Snapshots of the data are also available to download in the
 [Releases](https://github.com/tonofshell/ucpd-incident-data/releases)
-section of this repo.
+section of this repo. View the analysis of this data
+[here](analysis.md).
 
 ## Scraping Data
 
@@ -31,6 +32,29 @@ until the scraper reaches the last page. The current page number and
 total number of pages is scraped with each page to keep track of the
 scraper’s progress.
 
+``` r
+page_offset = 0
+page_counts = c(0, 1)
+
+crime_data = NULL
+prog_bar = NULL
+
+message("This may take awhile...")
+while (page_counts[1] <= page_counts[2]) {
+  ucpd_url = paste("https://incidentreports.uchicago.edu/incidentReportArchive.php?startDate=1277960400&endDate=", as.numeric(as.POSIXct(Sys.Date())), "&offset=", page_offset, sep = "")
+  ucpd_page = read_html(ucpd_url)
+  page_counts = ucpd_page %>% html_nodes(".page-count span") %>% html_text() %>% str_split("/") %>% unlist() %>% str_squish() %>% as.numeric()
+  if (is.null(crime_data)) {
+    crime_data = ucpd_page %>% html_nodes(".ucpd") %>% html_table() %>% .[[1]] %>% as_tibble()
+    prog_bar = txtProgressBar(min = 1, max = page_counts[2], style = 3)
+  } else {
+    crime_data = bind_rows(crime_data, ucpd_page %>% html_nodes(".ucpd") %>% html_table() %>% .[[1]] %>% as_tibble())
+    setTxtProgressBar(prog_bar, page_counts[1])
+  }
+  page_offset = page_offset + 5
+}
+```
+
 ## Exporting Data
 
 The scraped data is appended to a tibble on the fly, so from there, it
@@ -38,7 +62,7 @@ is simple to export the tibble as a CSV file. Each observation is a
 reported incident and includes and incident category, a location, the
 time the incident was reported, the time the reported incident occurred,
 comments/notes, status of the report, and an ID number. As of the last
-scraping at Tue Sep 10 12:18:38 2019 there were 12505 observations.
+scraping at Wed Sep 11 10:53:10 2019 there were 12510 observations.
 
 ``` r
 write_csv(crime_data, here(paste0("ucpd_crime_data_scraped_", Sys.Date(), ".csv")))
