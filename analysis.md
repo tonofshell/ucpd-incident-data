@@ -63,7 +63,7 @@ clean_disposition = function(disp_vector) {
     return(disp_vector)
 }
 
-ucpd_data = list.files(getwd(), pattern = "ucpd_crime_data_scraped_*") %>% 
+ucpd_data = list.files(getwd(), pattern = "ucpd_incident_data_scraped_*") %>% 
     read_csv() %>% fix_nas(c(":", "VOID", "Void", "void", "n/a", 
     "N/A", "na", "NA", "No reports this date", "None")) %>% mutate(Reported = Reported %>% 
     mdy_hm(), Start = Occurred %>% process_date_range() %>% extract_date() %>% 
@@ -137,7 +137,7 @@ unknown
 
 <td style="text-align:right;">
 
-3159
+3195
 
 </td>
 
@@ -153,7 +153,7 @@ ucpd
 
 <td style="text-align:right;">
 
-2979
+3056
 
 </td>
 
@@ -169,7 +169,7 @@ person
 
 <td style="text-align:right;">
 
-2459
+2531
 
 </td>
 
@@ -185,7 +185,7 @@ cpd
 
 <td style="text-align:right;">
 
-2023
+2083
 
 </td>
 
@@ -201,7 +201,7 @@ individual
 
 <td style="text-align:right;">
 
-1680
+1727
 
 </td>
 
@@ -217,7 +217,7 @@ arrested
 
 <td style="text-align:right;">
 
-1647
+1680
 
 </td>
 
@@ -233,7 +233,7 @@ victim
 
 <td style="text-align:right;">
 
-1383
+1419
 
 </td>
 
@@ -249,7 +249,7 @@ reported
 
 <td style="text-align:right;">
 
-1382
+1406
 
 </td>
 
@@ -265,23 +265,7 @@ campus
 
 <td style="text-align:right;">
 
-1339
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
-vehicle
-
-</td>
-
-<td style="text-align:right;">
-
-1322
+1376
 
 </td>
 
@@ -297,7 +281,23 @@ suspect
 
 <td style="text-align:right;">
 
-1315
+1353
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+vehicle
+
+</td>
+
+<td style="text-align:right;">
+
+1340
 
 </td>
 
@@ -313,7 +313,7 @@ officer
 
 <td style="text-align:right;">
 
-1241
+1248
 
 </td>
 
@@ -329,7 +329,7 @@ transported
 
 <td style="text-align:right;">
 
-1042
+1106
 
 </td>
 
@@ -345,7 +345,7 @@ cfd
 
 <td style="text-align:right;">
 
-1024
+1070
 
 </td>
 
@@ -361,7 +361,7 @@ motorist
 
 <td style="text-align:right;">
 
-1008
+1009
 
 </td>
 
@@ -429,7 +429,7 @@ person
 
 <td style="text-align:right;">
 
-1988
+2001
 
 </td>
 
@@ -451,7 +451,7 @@ officer
 
 <td style="text-align:right;">
 
-1159
+1166
 
 </td>
 
@@ -473,7 +473,7 @@ ems
 
 <td style="text-align:right;">
 
-814
+859
 
 </td>
 
@@ -495,7 +495,7 @@ officers
 
 <td style="text-align:right;">
 
-789
+809
 
 </td>
 
@@ -517,7 +517,7 @@ arrested
 
 <td style="text-align:right;">
 
-756
+759
 
 </td>
 
@@ -549,28 +549,6 @@ license
 
 <td style="text-align:left;">
 
-bike
-
-</td>
-
-<td style="text-align:left;">
-
-rack
-
-</td>
-
-<td style="text-align:right;">
-
-566
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;">
-
 cell
 
 </td>
@@ -583,7 +561,29 @@ phone
 
 <td style="text-align:right;">
 
-562
+581
+
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;">
+
+bike
+
+</td>
+
+<td style="text-align:left;">
+
+rack
+
+</td>
+
+<td style="text-align:right;">
+
+573
 
 </td>
 
@@ -627,7 +627,7 @@ arrested
 
 <td style="text-align:right;">
 
-358
+362
 
 </td>
 
@@ -649,7 +649,7 @@ bicycle
 
 <td style="text-align:right;">
 
-345
+351
 
 </td>
 
@@ -671,7 +671,7 @@ computer
 
 <td style="text-align:right;">
 
-343
+344
 
 </td>
 
@@ -693,7 +693,7 @@ beverages
 
 <td style="text-align:right;">
 
-322
+342
 
 </td>
 
@@ -715,7 +715,7 @@ alcoholic
 
 <td style="text-align:right;">
 
-310
+329
 
 </td>
 
@@ -737,7 +737,7 @@ reported
 
 <td style="text-align:right;">
 
-296
+298
 
 </td>
 
@@ -767,7 +767,7 @@ ggraph(bigram_graph, layout = "fr") + geom_edge_link(color = "grey") +
     nudge_y = 0, repel = TRUE, family = "Pragati Narrow") + scale_color_gradientn(colors = c("#000000", 
     color_pal(1, "discrete"))) + scale_size_continuous(range = c(4, 
     10)) + labs(title = "Connections Between 150 Most Common Word Parings", 
-    subtitle = "In UCPD reports from July 2010 to September 2019") + 
+    subtitle = "In UCPD reports from July 2010 to November 2019") + 
     theme_master(base_size = 22) + remove_axes + hide_legend
 ```
 

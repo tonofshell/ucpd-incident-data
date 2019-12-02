@@ -85,7 +85,7 @@ clean_disposition = function(disp_vector) {
   return(disp_vector)
 }
 
-ucpd_data = list.files(getwd(), pattern="ucpd_crime_data_scraped_*") %>% read_csv() %>% fix_nas(c(":", "VOID", "Void", "void", "n/a", "N/A", "na", "NA", "No reports this date", "None")) %>% mutate(Reported = Reported %>% mdy_hm(), Start = Occurred %>% process_date_range() %>% extract_date() %>% as_datetime(), End = Occurred %>% process_date_range(FALSE) %>% extract_date() %>% as_datetime(), Disposition = Disposition %>% clean_disposition()) %>% drop_na(Reported) %>% collapse_to_other(10, Disposition) %>% rename("Comments" = `Comments / Nature of Fire`)
+ucpd_data = list.files(getwd(), pattern="ucpd_incident_data_scraped_*") %>% read_csv() %>% fix_nas(c(":", "VOID", "Void", "void", "n/a", "N/A", "na", "NA", "No reports this date", "None")) %>% mutate(Reported = Reported %>% mdy_hm(), Start = Occurred %>% process_date_range() %>% extract_date() %>% as_datetime(), End = Occurred %>% process_date_range(FALSE) %>% extract_date() %>% as_datetime(), Disposition = Disposition %>% clean_disposition()) %>% drop_na(Reported) %>% collapse_to_other(10, Disposition) %>% rename("Comments" = `Comments / Nature of Fire`)
 ```
 
 ## Text Analysis
@@ -122,7 +122,7 @@ ggraph(bigram_graph, layout = "fr") +
   geom_node_text(aes(label = name, size = graph_data$n, color = graph_data$n), nudge_x = 0, nudge_y = 0, repel = TRUE, family = "Pragati Narrow") +
   scale_color_gradientn(colors = c("#000000", color_pal(1, "discrete"))) +
   scale_size_continuous(range = c(4, 10)) +
-  labs(title = "Connections Between 150 Most Common Word Parings", subtitle = "In UCPD reports from July 2010 to September 2019") +
+  labs(title = "Connections Between 150 Most Common Word Parings", subtitle = "In UCPD reports from July 2010 to November 2019") +
   theme_master(base_size = 22) +
   remove_axes +
   hide_legend
